@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>EnjoyYourTime</title>
+    <title>Login</title>
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css"
           th:href="@{bootstrap/css/bootstrap.min.css}"/>
 </head>
@@ -10,8 +10,13 @@
 <header th:replace="~{fragments/header}"></header>
 <main>
     <div class="container">
-        <h1>Login Page</h1>
-        <div style="color: red" th:if="${error} != null" th:text="${error}"></div>
+        <th:block th:if ="${error != null}">
+            <div class="alert alert-dismissible alert-danger" >
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p th:text = "${error}"></p>
+            </div>
+        </th:block>
+
         <form method="post">
             <div class="form-group">
                 <label class="form-control-label" for="inputUsername">Username</label>
@@ -27,8 +32,13 @@
                     Remember Me
                 </label>
             </div>
-            <input type="submit" class="btn btn-success" value="Log In"/>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="submit" class="btn btn-primary" value="Log In"/>
         </form>
+        <div>
+            <p>If you don't have an account you should</p> <a href="/register">register </a> firs.</p>
+            <input type="button" class="btn btn-success" href="/register" value="Register"/>
+        </div>
     </div>
 </main>
 <script th:replace="~{fragments/footer}"></script>

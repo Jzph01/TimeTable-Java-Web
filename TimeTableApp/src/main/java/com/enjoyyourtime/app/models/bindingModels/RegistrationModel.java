@@ -2,11 +2,13 @@ package com.enjoyyourtime.app.models.bindingModels;
 
 import com.enjoyyourtime.app.customValidations.IsPasswordMatching;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @IsPasswordMatching
 public class RegistrationModel {
 
+    @NotBlank(message = "Name should not be empty!")
     @Size(min = 3, message = "Username too short!")
     private String username;
 

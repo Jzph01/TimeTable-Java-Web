@@ -2,6 +2,7 @@ package com.enjoyyourtime.app.controllers;
 
 import com.enjoyyourtime.app.errors.Errors;
 import com.enjoyyourtime.app.models.bindingModels.RegistrationModel;
+import com.enjoyyourtime.app.models.bindingModels.UserLoginModel;
 import com.enjoyyourtime.app.models.viewModels.UserViewModel;
 import com.enjoyyourtime.app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,11 @@ public class UserController {
     public String getLoginPage(@RequestParam(required = false) String error, Model model){
         if(error != null){
             model.addAttribute("error", Errors.INVALID_CREDENTIALS);
+
         }
         return "login";
     }
+
 
     @GetMapping("/users")
     public String getUsersPage(Model model){
