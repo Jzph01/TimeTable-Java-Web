@@ -38,6 +38,13 @@ public class UserServiceImpl implements UserService{
         User user = this.modelMapper.map(registrationModel, User.class);
         String encryptedPassword =this.bCryptPasswordEncoder.encode(registrationModel.getPassword());
         user.setPassword(encryptedPassword);
+
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
+
+
         this.userRepository.save(user);
     }
 
