@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +31,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/register", "/bootstrap/**", "/jquery/**", "/activity/**").permitAll()
+                .antMatchers("/", "/register", "/bootstrap/**", "/jquery/**", "/activity").permitAll()
                 .antMatchers("/activity/add/**").access("hasRole('ADMIN') or hasRole('EDITOR')")
                 .antMatchers("/activity/edit/**").access("hasRole('ADMIN') or hasRole('EDITOR')")
                 .antMatchers("/activity/delete/**").access("hasRole('ADMIN') or hasRole('EDITOR')")
@@ -43,13 +46,20 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
                 .rememberMeCookieName("RememberMe")
                 .rememberMeParameter("rememberMe")
                 .key("SecretKey")
-                .tokenValiditySeconds(1000000)
+                .tokenValiditySeconds(100000)
                 .and()
-                .logout().logoutSuccessUrl("/login?logout").permitAll()
+                .logout().logoutSuccessUrl("/login?logout").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/unauthorized")
                 .and()
-                .csrf().disable();
+                .csrf()
+                .csrfTokenRepository(getCsrfTokenRepository());
+    }
+
+    private CsrfTokenRepository getCsrfTokenRepository() {
+        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+        repository.setSessionAttributeName("_csrf");
+        return repository;
     }
 
     @Bean

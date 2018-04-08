@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -18,6 +19,8 @@ public class User implements UserDetails {
     private long id;
 
     private String username;
+
+    private String email;
 
     private String password;
 
@@ -34,6 +37,27 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> authorities;
+
+
+    @OneToMany()
+    private Set<Activity> activities;
+
+
+
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Set<Activity> getActivities() {
+        return activities;
+    }
+
+    public long getId() {
+        return id;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -101,5 +125,13 @@ public class User implements UserDetails {
 
     public void setAuthorities(Set<Role> authorities) {
         this.authorities = authorities;
+    }
+
+    public void setActivities(Set<Activity> activities) {
+        this.activities = activities;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

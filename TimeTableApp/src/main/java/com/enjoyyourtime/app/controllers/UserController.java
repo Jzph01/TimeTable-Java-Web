@@ -51,4 +51,9 @@ public class UserController {
         model.addAttribute("users", userViewModelList);
         return "users";
     }
+
+    @GetMapping()
+    public String getProfilePage(){
+
+    }
 }

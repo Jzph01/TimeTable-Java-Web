@@ -25,9 +25,10 @@
             <div class="form-group" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'has-danger'">
                 <label class="form-control-label" for="inputConfirmPassword">Confirm Password</label>
                 <input type="password" class="form-control form-control-danger" id="inputConfirmPassword" th:field="*{confirmPassword}"/>
-                <div class="form-control-feedback" th:each="error : ${#fields.errors('confirmPassword')}" th:text="${error}">Sorry, passwords are not matching!</div>
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('global')}" th:text="${error}">Sorry, passwords are not matching!</div>
             </div>
             <input type="submit" class="btn btn-success" value="Register"/>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         </form>
     </div>
 </main>
