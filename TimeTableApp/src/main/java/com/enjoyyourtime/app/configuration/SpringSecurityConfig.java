@@ -51,7 +51,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
                 .rememberMeCookieName("RememberMe")
                 .rememberMeParameter("rememberMe")
                 .key("SecretKey")
-                .tokenValiditySeconds(100000)
                 .and()
                 .logout().logoutSuccessUrl("/login?logout").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
                 .and()

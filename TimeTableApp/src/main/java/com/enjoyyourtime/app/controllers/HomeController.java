@@ -10,7 +10,7 @@ public class HomeController {
     @GetMapping("/")
     public String getHomePge(Model model){
 
-        model.addAttribute("view", "home");
+        model.addAttribute("view", "home/index");
         return "base-layout";
     }
 }

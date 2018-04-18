@@ -16,7 +16,7 @@ public class RegistrationModel {
     @Pattern(regexp = "^(?:\\S+)@(?:\\S+)\\.(?:\\S+)$", message = "Invalid Email")
     private String email;
 
-    @Size(min = 6, message = "Password too short!")
+    @Size(min = 3, message = "Password too short!")
     private String password;
 
 

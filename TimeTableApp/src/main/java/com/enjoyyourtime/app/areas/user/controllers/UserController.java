@@ -1,52 +1,60 @@
 package com.enjoyyourtime.app.areas.user.controllers;
 
-import com.enjoyyourtime.app.errors.Errors;
-import com.enjoyyourtime.app.areas.user.models.bindingModels.RegistrationModel;
+import com.enjoyyourtime.app.areas.user.entities.User;
 import com.enjoyyourtime.app.areas.user.models.viewModels.UserViewModel;
 import com.enjoyyourtime.app.areas.user.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequestMapping("users")
 public class UserController {
 
     private final UserService userService;
 
+    private final ModelMapper modelMapper;
+
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
+        this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/register")
-    public String getRegisterPage(@ModelAttribute RegistrationModel registrationModel){
-        return "register";
-    }
-
-    @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute RegistrationModel registrationModel, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            return "register";
+    @GetMapping("/profile/{id}")
+    public String getProfilePage(@PathVariable Long id, Model model){
+        UserViewModel userViewModel = this.userService.getById(id);
+        if(userViewModel == null){
+            model.addAttribute("view", "error/wrong-page");
+            return "base-layout";
         }
 
-        this.userService.register(registrationModel);
-        return "redirect:/login";
+        model.addAttribute("user", userViewModel);
+        model.addAttribute("view", "user/profile");
+
+        return "base-layout";
     }
 
-    @GetMapping("/login")
-    public String getLoginPage(@RequestParam(required = false) String error, Model model){
-        if(error != null){
-            model.addAttribute("error", Errors.INVALID_CREDENTIALS);
+    @GetMapping("/profile")
+    public String getUserProfilePge(Model model, Principal principal){
+        UserViewModel userViewModel =  this.userService.getByUsername(principal.getName());;
+         if(userViewModel == null){
+             model.addAttribute("view", "error/wrong-page");
+             return "base-layout";
+         }
 
-        }
-        return "login";
+         model.addAttribute("user", userViewModel);
+         model.addAttribute("view", "user/profile");
+
+         return "base-layout";
     }
-
 
     @GetMapping("/users")
     public String getUsersPage(Model model){
@@ -55,8 +63,5 @@ public class UserController {
         return "users";
     }
 
-    @GetMapping()
-    public String getProfilePage(){
-        return null;
-    }
+
 }

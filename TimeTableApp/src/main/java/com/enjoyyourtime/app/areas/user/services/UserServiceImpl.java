@@ -1,7 +1,6 @@
 package com.enjoyyourtime.app.areas.user.services;
 
 import com.enjoyyourtime.app.areas.user.entities.User;
-import com.enjoyyourtime.app.errors.Errors;
 import com.enjoyyourtime.app.areas.user.models.bindingModels.RegistrationModel;
 import com.enjoyyourtime.app.areas.user.models.viewModels.UserViewModel;
 import com.enjoyyourtime.app.areas.user.repositories.UserRepository;
@@ -11,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,11 +58,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserViewModel getByUsername(String username) {
+        User user = this.userRepository.findOneByUsername(username);
+        UserViewModel userViewModel = null;
+        if (user != null){
+            userViewModel = this.modelMapper.map(user,UserViewModel.class);
+        }
+        return userViewModel;
+    }
+
+    // getOne()
+    @Override
+    public UserViewModel getById(Long id) {
+        User user = this.userRepository.getOne(id);
+        UserViewModel userViewModel = null;
+        if (user != null){
+            userViewModel = this.modelMapper.map(user,UserViewModel.class);
+        }
+        return userViewModel;
+    }
+
+    @Override
+    public User findOneByUserName(String userName) {
+        return this.userRepository.findOneByUsername(userName);
+    }
+
+    @Transactional
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.userRepository.findOneByUsername(username);
-        if(user == null){
-            throw new UsernameNotFoundException(Errors.INVALID_CREDENTIALS);
+        if (user == null) {
+            throw new UsernameNotFoundException("Wrong");
         }
+
         return user;
     }
 

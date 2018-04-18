@@ -1,0 +1,22 @@
+<div class="row">
+    <div>
+            <div class="card hovercard">
+                <div class="cardheader">
+                </div>
+                <div class="info">
+                    <div class="title" th:text="${user.username}">
+                    </div>
+                </div>
+                <div th:if="${#authentication != null}">
+                    <br/>
+                    <a  class="btn btn-primary btn-twitter btn-sm"
+                       th:if="${user.id == #authentication.getPrincipal().getId()}" th:href="@{/timeTable}">My Time Table</a>
+                    <br/>
+                    <br/>
+                    <a  class="btn btn-primary btn-twitter btn-sm"
+                            th:if="${user.id == #authentication.getPrincipal().getId()}"  th:href="@{/activity/add}">Recommend</a>
+                    <br/>
+                </div>
+            </div>
+    </div>
+</div>

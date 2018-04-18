@@ -1,45 +1,19 @@
-package com.enjoyyourtime.app.areas.activity.entities;
+package com.enjoyyourtime.app.areas.activity.models.bindingModels;
 
-import com.enjoyyourtime.app.areas.user.entities.User;
-
-import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
-@Entity
-@Table(name = "activities")
-public class Activity {
+public class EditActivityBindingModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+    @Size(min = 3, max = 30, message = "Title Should Be Minimum 3 Maximum 30 characters!")
     private String title;
-
+    @Size(min = 3, max = 30, message = "Link Should Be Minimum 3 Maximum 30 characters!")
     private String link;
 
     private String info;
 
     private Date expirationDate;
 
-    @ManyToOne()
-    private User editor;
-
-
-    public User getEditor() {
-        return editor;
-    }
-
-    public void setEditor(User editor) {
-        this.editor = editor;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -72,4 +46,5 @@ public class Activity {
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }
+
 }

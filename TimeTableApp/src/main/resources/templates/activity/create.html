@@ -1,0 +1,30 @@
+<div class="container">
+    <form method="post" th:object="${addActivityBindingModel}">
+        <div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-danger'">
+            <label for="titleId">Title</label>
+            <input type="text" class="form-control" id="titleId" aria-describedby="titleHelp" name="title"  th:field="*{title}"/>
+            <small id="titleHelp" class="form-control-feedback" th:each="error : ${#fields.errors('title')}" th:text="${error}">Invalid Title</small>
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('link')}? 'has-danger'">
+            <label for="link">Link</label>
+            <textarea type="text" class="form-control" id="link" aria-describedby="linkHelp" name="link" th:field="*{link}"/>
+            <small id="linkHelp" class="form-control-feedback" th:each="error : ${#fields.errors('link')}" th:text="${error}">Invalid Link</small>
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('info')}? 'has-danger'">
+            <label for="info">Info</label>
+            <textarea type="text" class="form-control" id="info" aria-describedby="infoHelp" name="info" th:field="*{info}"/>
+            <small id="infoHelp" class="form-control-feedback" th:each="error : ${#fields.errors('info')}" th:text="${error}">Invalid Info</small>
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('expirationDate')}? 'has-danger'">
+            <label for="expDate">Expiration Date</label>
+            <input type="date" class="form-control" id="expDate" aria-describedby="expdateHelp" name="expirationDate" th:field="*{expirationDate}"/>
+            <small id="expdateHelp" class="form-control-feedback" th:each="error : ${#fields.errors('expirationDate')}" th:text="|Invalid Date|">Invalid Date</small>
+        </div>
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <input type="submit" class="btn btn-primary" value="Add"/>
+    </form>
+</div>

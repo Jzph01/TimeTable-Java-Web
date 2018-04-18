@@ -39,7 +39,7 @@ public class User implements UserDetails {
     private Set<Role> authorities;
 
 
-    @OneToMany()
+    @OneToMany(mappedBy = "editor")
     private Set<Activity> activities;
 
 

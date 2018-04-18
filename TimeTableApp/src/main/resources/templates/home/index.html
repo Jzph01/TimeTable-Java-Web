@@ -1,0 +1,12 @@
+<div class="container">
+    <br/>
+    <button type="button" class="btn btn-primary btn-lg btn-block" th:href="@{/timeTable}">My Time Table</button>
+    <br/>
+    <div>
+        <h3>List of recommendations!!! </h3>
+    </div>
+    <div class="container-fluid" sec:authorize="hasRole('ADMIN')">
+        <p th:text="${ip}">Home Page</p>
+        <p th:text="|Page clicked: ${visited}|">Time visited</p>
+    </div>
+</div>

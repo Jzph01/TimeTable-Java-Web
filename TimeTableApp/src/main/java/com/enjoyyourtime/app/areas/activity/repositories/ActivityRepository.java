@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
 
 
-
+    @Override
+    void deleteById(Long aLong);
 }
