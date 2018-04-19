@@ -44,7 +44,7 @@ public class UserController {
 
     @GetMapping("/profile")
     public String getUserProfilePge(Model model, Principal principal){
-        UserViewModel userViewModel =  this.userService.getByUsername(principal.getName());;
+        UserViewModel userViewModel =  this.userService.getByUsername(principal.getName());
          if(userViewModel == null){
              model.addAttribute("view", "error/wrong-page");
              return "base-layout";

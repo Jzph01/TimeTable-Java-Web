@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<div class="container">
+    <div class="card-group">
+        <p class="card-text right" th:text="${user.username}"></p>
+        <div class="card" th:object="${activity}">
+            <div class="card-block">
+                <h4 class="card-title" th:text="*{title}"></h4>
+                <a class="card-text" th:text=" *{link}"></a>
+            </div>
+            <div class="card-block">
+                <p class="card-text" th:text="*{info}"></p>
+            </div>
+            <div class="form-group">
+                <div th:if="${#authentication != null}">
+                <a  class="btn btn-primary btn-twitter btn-sm right"
+                    th:if="${user.id == #authentication.getPrincipal().getId()}"
+                    th:href="@{/activity/edit/{id}(id = ${activity.id})}">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

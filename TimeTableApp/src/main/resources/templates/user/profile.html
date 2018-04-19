@@ -13,6 +13,7 @@
                        th:if="${user.id == #authentication.getPrincipal().getId()}" th:href="@{/timeTable}">My Time Table</a>
                     <br/>
                     <br/>
+
                     <a  class="btn btn-primary btn-twitter btn-sm"
                             th:if="${user.id == #authentication.getPrincipal().getId()}"  th:href="@{/activity/add}">Recommend</a>
                     <br/>
