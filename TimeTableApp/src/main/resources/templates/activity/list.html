@@ -1,0 +1,17 @@
+
+
+<div  th:fragment="activity-list">
+
+
+                <div  id="sub-activity" th:each="activity : ${activities}" th:object="${activity}" >
+
+                    <a  th:href="@{/activity/{id}(id = *{id})}" >
+                        <ul>
+                            <li  th:text="*{title}"></li>
+                            <li  th:text="*{link}"></li>
+                        </ul>
+                    </a>
+
+                </div>
+
+</div>

@@ -2,6 +2,7 @@ package com.enjoyyourtime.app.areas.activity.controllers;
 
 import com.enjoyyourtime.app.areas.activity.entities.Activity;
 import com.enjoyyourtime.app.areas.activity.models.bindingModels.AddActivityBindingModel;
+import com.enjoyyourtime.app.areas.activity.models.bindingModels.EditActivityBindingModel;
 import com.enjoyyourtime.app.areas.activity.models.viewModels.ActivityViewModel;
 import com.enjoyyourtime.app.areas.activity.services.ActivityService;
 import com.enjoyyourtime.app.areas.user.models.viewModels.UserViewModel;
@@ -56,9 +57,36 @@ public class ActivityController {
         UserViewModel userViewModel =  this.userService.getByUsername(principal.getName());
         model.addAttribute("activity", activityViewModel);
         model.addAttribute("user",userViewModel);
-        model.addAttribute("view", "activity/show");
+        model.addAttribute("view", "/activity/show");
         return "base-layout";
     }
 
+    @GetMapping("/update/{id}")
+    public String getUpdateActivityPage(Model model, @PathVariable Long id){
+        EditActivityBindingModel editActivityBindingModel = this.activityService.findActivityById(id);
+        model.addAttribute("editActivityBindingModel", editActivityBindingModel);
+        model.addAttribute("view","/activity/update");
+        return "base-layout";
+    }
 
+    @PostMapping("/update/{id}")
+    public String updateActivity(Model model, @PathVariable Long id
+            , @Valid @ModelAttribute EditActivityBindingModel editActivityBindingModel
+            , BindingResult bindingResult
+            , Principal principal){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("view", "activity/update");
+            return "base-layout";
+        }
+
+        this.activityService.update(editActivityBindingModel, principal.getName());
+        return "redirect:/activity/" + id;
+    }
+
+    @GetMapping("")
+    public String getListOfActivities(Model model){
+        model.addAttribute("activities", activityService.getAllActivities());
+        model.addAttribute("view", "activity/list");
+        return "base-layout";
+    }
 }

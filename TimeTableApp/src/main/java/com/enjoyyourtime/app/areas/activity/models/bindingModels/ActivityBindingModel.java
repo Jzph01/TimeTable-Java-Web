@@ -8,6 +8,8 @@ import java.util.Date;
 
 public class ActivityBindingModel {
 
+    private Long id;
+
     @Size(min = 3, max = 30, message = "Title Should Be Minimum 3 Maximum 30 characters!")
     private String title;
     @Size(min = 3, max = 30, message = "Link Should Be Minimum 3 Maximum 30 characters!")
@@ -50,5 +52,12 @@ public class ActivityBindingModel {
 
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
+    }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

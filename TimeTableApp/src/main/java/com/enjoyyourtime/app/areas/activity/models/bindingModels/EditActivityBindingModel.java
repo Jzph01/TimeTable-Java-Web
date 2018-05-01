@@ -1,19 +1,26 @@
 package com.enjoyyourtime.app.areas.activity.models.bindingModels;
 
+import com.enjoyyourtime.app.areas.activity.customValidations.PresentOrFuture;
+import com.enjoyyourtime.app.areas.user.entities.User;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class EditActivityBindingModel {
 
+    private Long id;
+
     @Size(min = 3, max = 30, message = "Title Should Be Minimum 3 Maximum 30 characters!")
     private String title;
     @Size(min = 3, max = 30, message = "Link Should Be Minimum 3 Maximum 30 characters!")
     private String link;
-
+    @Size(min = 3, max = 10000, message = "Info Should Be Minimum 3 Maximum 10000 characters!")
     private String info;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @PresentOrFuture(message = "The expiration date should be in a future moment")
     private Date expirationDate;
-
 
     public String getTitle() {
         return title;
@@ -46,5 +53,15 @@ public class EditActivityBindingModel {
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }
+
+     public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
 
 }
